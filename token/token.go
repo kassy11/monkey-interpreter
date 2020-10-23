@@ -1,22 +1,19 @@
-// トークンを定義
-
 package token
 
 type TokenType string
 
 type Token struct {
-	Type    TokenType // 識別子
-	Literal string    // トークンのリテラル値
+	Type    TokenType
+	Literal string
 }
 
-// トークンの種類を定義
 const (
-	ILLEGAL = "ILLEGAL" // 未知なトークン
-	EOF     = "EOF"     // ファイル終端
+	ILLEGAL = "ILLEGAL"
+	EOF     = "EOF"
 
-	// 識別子＋リテラル
-	IDENT = "IDENT"
-	INT   = "INT"
+	// 識別子 + リテラル
+	IDENT = "IDENT" // add, foobar, x, y, ...
+	INT   = "INT"   // 123456
 
 	// 演算子
 	ASSIGN   = "="
@@ -25,6 +22,9 @@ const (
 	BANG     = "!"
 	ASTERISK = "*"
 	SLASH    = "/"
+
+	EQ     = "=="
+	NOT_EQ = "!="
 
 	LT = "<"
 	GT = ">"
@@ -38,19 +38,30 @@ const (
 	LBRACE = "{"
 	RBRACE = "}"
 
+	// キーワード
 	FUNCTION = "FUNCTION"
 	LET      = "LET"
+	TRUE     = "TRUE"
+	FALSE    = "FALSE"
+	IF       = "IF"
+	ELSE     = "ELSE"
+	RETURN   = "RETURN"
 )
 
 var keywords = map[string]TokenType{
-	"fn":  FUNCTION,
-	"let": LET,
+	"fn":     FUNCTION,
+	"let":    LET,
+	"true":   TRUE,
+	"false":  FALSE,
+	"if":     IF,
+	"else":   ELSE,
+	"return": RETURN,
 }
 
-// keywordsテーブルを確認して、渡された識別子がキーワードに当たるかを返す
 func LookupIdent(ident string) TokenType {
 	if tok, ok := keywords[ident]; ok {
 		return tok
 	}
+
 	return IDENT
 }
