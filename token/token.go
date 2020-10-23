@@ -1,27 +1,30 @@
+// トークンを定義
+
 package token
 
 type TokenType string
 
 type Token struct {
-	Type TokenType
-	Literal string
+	Type    TokenType // 識別子
+	Literal string    // トークンのリテラル値
 }
 
+// トークンの種類を定義
 const (
-	ILLEGAL = "ILLEGAL"
-	EOF = "EOF"
+	ILLEGAL = "ILLEGAL" // 未知なトークン
+	EOF     = "EOF"     // ファイル終端
 
 	// 識別子＋リテラル
-	IDENT =  "IDENT"
-	INT = "INT"
+	IDENT = "IDENT"
+	INT   = "INT"
 
 	// 演算子
 	ASSIGN = "="
-	PLUS =  "+"
+	PLUS   = "+"
 
 	// デリミタ
-	COMMA = ","
-	SEMICOLON =  ";"
+	COMMA     = ","
+	SEMICOLON = ";"
 
 	LPAREN = "("
 	RPAREN = ")"
@@ -29,5 +32,18 @@ const (
 	RBRACE = "}"
 
 	FUNCTION = "FUNCTION"
-	LET =  "LET"
+	LET      = "LET"
 )
+
+var keywords = map[string]TokenType{
+	"fn":  FUNCTION,
+	"let": LET,
+}
+
+// keywordsテーブルを確認して、渡された識別子がキーワードに当たるかを返す
+func LookupIdent(ident string) TokenType {
+	if tok, ok := keywords[ident]; ok {
+		return tok
+	}
+	return IDENT
+}
