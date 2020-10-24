@@ -5,5 +5,25 @@
 
 
 #### 字句解析  
+`$ go run main.go`  
+Hello kotarokashihara! This is the monkey Programming Language  
+Feel free to type commands  
+`>> let add = fn(x,y){x+y;};`  
+{Type:LET Literal:let}  
+{Type:IDENT Literal:add}  
+{Type:= Literal:=}  
+{Type:FUNCTION Literal:fn}  
+{Type:( Literal:(}  
+{Type:IDENT Literal:x}  
+{Type:, Literal:,}  
+{Type:IDENT Literal:y}  
+{Type:) Literal:)}  
+{Type:{ Literal:{}  
+{Type:IDENT Literal:x}  
+{Type:+ Literal:+}  
+{Type:IDENT Literal:y}  
+{Type:; Literal:;}  
+{Type:} Literal:}}  
+{Type:; Literal:;}  
 
 ### 構文解析  
