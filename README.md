@@ -4,7 +4,7 @@
 ![51sLCPa8DBL _SX388_BO1,204,203,200_](https://user-images.githubusercontent.com/43651940/96365304-9cd7c200-117a-11eb-9a00-701da2df50ae.jpg)
 
 
-#### 字句解析  
+### chapter01 字句解析  
 `$ go run main.go`  
 Hello kotarokashihara! This is the monkey Programming Language  
 Feel free to type commands  
@@ -26,4 +26,4 @@ Feel free to type commands
 {Type:} Literal:}}  
 {Type:; Literal:;}  
 
-### 構文解析  
+### chapter02 構文解析  
