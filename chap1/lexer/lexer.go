@@ -3,33 +3,39 @@
 
 package lexer
 
-import "github.com/kassy11/monkey-interpreter/token"
+import "github.com/kassy11/monkey-interpreter/chap1/token"
 
+// 字句解析対象の文字列と
 type Lexer struct {
-	input        string // ソースコードの型はstringとしておく
-	position     int    // 現在検査中のバイトchの位置を指す
-	readPosition int    // 現在の文字位置の次を指す
-	ch           byte   // 現在検査中の文字
+	input string // // 字句解析対象の文字列
+	// 以下2つの位置はいずれも、入力中の文字にアクセスするためのインデックスとして用いる
+	position     int  // 現在検査中の文字chの位置を指す
+	readPosition int  // 現在の文字位置の次（これから読み込む位置）
+	ch           byte // 現在検査中の文字
 }
 
 func New(input string) *Lexer {
-	l := &Lexer{input: input}
+	l := &Lexer{input: input} // 構造体のinputに引数で受け取る文字列を格納する
 	l.readChar()
 	return l
 }
 
+// 一文字（バイト）単位で読み進める
 // 次の１文字を読み込んで現在のinput文字位置を一つ進める
 func (l *Lexer) readChar() {
+	// 最後まで読み込んだとき
 	if l.readPosition >= len(l.input) {
 		l.ch = 0 // asciiコードの『ファイル終端』を表す0にしておく
 	} else {
+		// 次の文字を読み出す
 		l.ch = l.input[l.readPosition]
 	}
 	l.position = l.readPosition
 	l.readPosition += 1
 }
 
-// inputから現在検査中の文字のトークン構造体を生成する
+// トークン単位で読み進める
+// inputから現在検査中の文字のトークン構造体を一つ生成して返す
 func (l *Lexer) NextToken() token.Token {
 	var tok token.Token
 
@@ -37,8 +43,9 @@ func (l *Lexer) NextToken() token.Token {
 
 	switch l.ch {
 	case '=':
-		if l.peekChar() == '=' { // 次が=のとき(==のとき)
+		if l.peekChar() == '=' { // =の次が=のとき(==のとき)
 			ch := l.ch
+			// 一文字読み進める
 			l.readChar()
 			literal := string(ch) + string(l.ch)
 			tok = token.Token{Type: token.EQ, Literal: literal}
@@ -86,7 +93,6 @@ func (l *Lexer) NextToken() token.Token {
 			tok.Literal = l.readIdentifier()
 			tok.Type = token.LookupIdent(tok.Literal)
 			return tok
-
 		} else if isDigit(l.ch) {
 			tok.Type = token.INT
 			tok.Literal = l.readNumber()
@@ -96,7 +102,7 @@ func (l *Lexer) NextToken() token.Token {
 		}
 	}
 
-	l.readChar() // 次に呼び出したときに以前から一文字進んでいる状態にする
+	l.readChar() // 次にNewToken()を読んだときに、l.chが更新されているようにする
 	return tok
 }
 
@@ -112,6 +118,7 @@ func (l *Lexer) readIdentifier() string {
 	for isLetter(l.ch) {
 		l.readChar()
 	}
+	// 文字列を返す
 	return l.input[position:l.position]
 }
 
@@ -139,7 +146,8 @@ func (l *Lexer) readNumber() string {
 	return l.input[position:l.position]
 }
 
-// 次の入力を覗き見（先読み）する
+// 次の入力を覗き見する
+// readChar()とほぼ同じで、インクリメントしないところは異なる→覗き見
 func (l *Lexer) peekChar() byte {
 	if l.readPosition >= len(l.input) {
 		return 0

@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/kassy11/monkey-interpreter/lexer"
-	"github.com/kassy11/monkey-interpreter/token"
+	"github.com/kassy11/monkey-interpreter/chap1/lexer"
+	"github.com/kassy11/monkey-interpreter/chap1/token"
 )
 
 const PROMPT = ">> "
