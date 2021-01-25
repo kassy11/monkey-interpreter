@@ -34,7 +34,7 @@ func (p *Program) TokenLiteral() string {
 
 type LetStatement struct {
 	Token token.Token // token.LETトークン
-	Name *Identifier // 変数の名前
+	Name *Identifier // 変数の名前（構造体のポインタ）
 	Value Expression
 }
 
